@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import store from '@/store'
 import Router from 'vue-router'
 import routes from './routers'
 
@@ -28,36 +27,17 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title
   }
   //权限控制
-  if (!hasToken && to.name !== LOGIN_PAGE_NAME) {
-    // 未登录且要跳转的页面不是登录页，跳转到登录页
+  if (!hasToken) {
+    // 未登录
+    removeToken()
     next({
       name: LOGIN_PAGE_NAME
     })
-  } else if (!hasToken && to.name === LOGIN_PAGE_NAME) {
-    // 未登陆且要跳转的页面是登录页
-    next()
   } else if (hasToken && to.name === LOGIN_PAGE_NAME) {
-    // 已登录且要跳转的页面是登录页
-    next({
-      name: '/'
-    })
+    next({ name: '' })
   } else {
-    if (store.state.user.hasGetPermissions) {
-      //此处后续添加, 页面的访问权限限制
-      next()
-    } else {
-      store
-        .dispatch('getUserPermissions')
-        .then(() => {
-          next()
-        })
-        .catch(() => {
-          removeToken() //请求失败后, 清除token重新登录
-          next({
-            name: 'login'
-          })
-        })
-    }
+    // 已登陆
+    next()
   }
 })
 

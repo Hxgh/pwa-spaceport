@@ -9,7 +9,9 @@ export default {
   methods: {
     ...mapActions(['login']),
     handleLogin() {
-      this.login({})
+      this.login({}).then(r => {
+        console.log(r)
+      })
     }
   }
 }
