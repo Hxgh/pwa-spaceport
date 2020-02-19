@@ -31,5 +31,14 @@ module.exports = {
   // },
   productionSourceMap: true,
 
-  lintOnSave: undefined
-};
+  lintOnSave: undefined,
+
+  pwa: {
+    name: 'Spaceport',
+    themeColor: '#32C4EE',
+    msTileColor: '#FFDA44',
+    manifestOptions: {
+      background_color: '#DEF8FF'
+    }
+  }
+}

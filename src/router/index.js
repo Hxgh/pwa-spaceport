@@ -14,7 +14,7 @@ Vue.use(Router)
 
 const router = new Router({
   routes: routes,
-  mode: 'hash'
+  mode: 'history'
 })
 
 router.beforeEach((to, from, next) => {
@@ -27,16 +27,15 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title
   }
   //权限控制
-  if (!hasToken) {
-    // 未登录
+  if (to.name !== LOGIN_PAGE_NAME && !hasToken) {
     removeToken()
     next({
       name: LOGIN_PAGE_NAME
     })
-  } else if (hasToken && to.name === LOGIN_PAGE_NAME) {
-    next({ name: '' })
+  } else if (to.name === LOGIN_PAGE_NAME && hasToken) {
+    removeToken()
+    next()
   } else {
-    // 已登陆
     next()
   }
 })

@@ -28,28 +28,7 @@ for (let i = 0; i < count; i++) {
 
 export default [
   {
-    url: '/api/login',
-    type: 'get',
-    response: config => {
-      const { page = 1, limit = 10 } = config.query
-      let mockList = TaskList
-
-      const pageList = mockList.filter(
-        (item, index) => index < limit * page && index >= limit * (page - 1)
-      )
-
-      return {
-        code: 200,
-        success: true,
-        data: {
-          total: mockList.length,
-          dataList: pageList
-        }
-      }
-    }
-  },
-  {
-    url: '/api/logout',
+    url: '/api/mock',
     type: 'get',
     response: config => {
       const { page = 1, limit = 10 } = config.query

@@ -1,29 +1,32 @@
 import { login, logout } from '@/api/account'
-import { getToken, setToken } from '@/libs/auth'
+import { getToken, setToken, removeToken } from '@/libs/auth'
 
 const state = {
-  token: getToken()
+  user: getToken()
 }
 
 const mutations = {
   SET_TOKEN: (state, payload) => {
-    state.token = payload
+    state.user = payload
     setToken(payload)
+  },
+  REMOVE_TOKEN: () => {
+    removeToken()
   }
 }
 
 const actions = {
   // 用户登录
-  login({ commit }) {
+  login({ state, commit }, payload) {
     return new Promise((resolve, reject) => {
-      login()
+      login(payload)
         .then(response => {
           if (response.code != 200) {
             reject(response)
           }
           const { data } = response
           commit('SET_TOKEN', data)
-          resolve()
+          resolve(data)
         })
         .catch(error => {
           reject(error)
@@ -31,17 +34,20 @@ const actions = {
     })
   },
   // 退出登录
-  logout({ state, commit }) {
+  logout({ commit }) {
     return new Promise((resolve, reject) => {
-      commit('SET_TOKEN', '')
-      resolve()
-      logout(state.token)
-        .then(() => {
-          commit('setToken', '')
-          resolve()
+      logout()
+        .then(response => {
+          if (response.code != 200) {
+            reject(response)
+          }
+          const { data } = response
+          console.log(data)
+          commit('REMOVE_TOKEN')
+          resolve(data)
         })
-        .catch(err => {
-          reject(err)
+        .catch(error => {
+          reject(error)
         })
     })
   }

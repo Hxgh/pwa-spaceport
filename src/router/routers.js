@@ -3,26 +3,29 @@ import Layout from '@/layout/Index.vue'
 export default [
   {
     path: '/',
-    name: '/',
+    name: '',
     redirect: '/app'
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/view/login/index.vue')
+    meta: {
+      title: '登陆'
+    },
+    component: () => import('@/view/login')
   },
   {
     path: '/app',
     component: Layout,
-    redirect: '/app/home',
+    redirect: 'app/home',
     children: [
       {
-        path: '/home',
+        path: 'home',
         name: 'home',
         meta: {
           title: 'home'
         },
-        component: () => import('@/view/home/index.vue')
+        component: () => import('@/view/home')
       }
     ]
   }

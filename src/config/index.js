@@ -1,6 +1,6 @@
 export default {
   baseUrl: {
-    dev: 'http://127.0.0.1:9257/',
+    dev: 'http://localhost:9527',
     pro: 'http://localhost:2020'
   }
 }

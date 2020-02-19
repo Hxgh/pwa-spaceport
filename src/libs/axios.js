@@ -12,14 +12,19 @@ class HttpRequest {
     this.pending = []
   }
   getInsideConfig() {
+    const token = getToken()
     const config = {
       baseURL: this.baseUrl,
       timeout: 50000, // request timeout
       withCredentials: false, //表示跨域请求时是否需要使用凭证
       headers: {
-        Authorization: 'Bearer ' + getToken()
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+        Authorization:
+          'Bearer ' + token && typeof token == 'object' && token.id
+            ? token.id
+            : ''
       }
-      // withCredentials: true
     }
     return config
   }
@@ -71,7 +76,7 @@ class HttpRequest {
         NProgress.done() //顶部加载条结束
         this.destroy(url)
         if (response.data.success) {
-          return response.data
+          return response.data || response
         } else {
           // 这里是返回状态码200时，自定义的错误
           return Promise.reject(response.data)

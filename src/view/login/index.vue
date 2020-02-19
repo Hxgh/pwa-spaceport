@@ -9,8 +9,8 @@ export default {
   methods: {
     ...mapActions(['login']),
     handleLogin() {
-      this.login({}).then(r => {
-        console.log(r)
+      this.login({ login: 'login' }).then(() => {
+        this.$router.push({ name: 'home' })
       })
     }
   }
