@@ -9,9 +9,7 @@ export default {
   methods: {
     ...mapActions(['logout']),
     handle() {
-      this.logout().then(() => {
-        this.$router.push({ name: 'login' })
-      })
+      this.logout()
     }
   }
 }

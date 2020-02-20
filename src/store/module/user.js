@@ -45,6 +45,7 @@ const actions = {
           console.log(data)
           commit('REMOVE_TOKEN')
           resolve(data)
+          window.location.reload()
         })
         .catch(error => {
           reject(error)
